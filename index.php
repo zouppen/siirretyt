@@ -34,6 +34,12 @@ if ($match==false) {
 
 $postfix=substr($number,strlen($prefix));
 
+if (strlen($postfix) > $max_length) {
+  // siirretytnumerot.fi's maximum length reached
+  print("liian pitkä numero\n");
+  exit(0);
+ }
+
 print("Osui ja upposi: operaattori on ".$prefix.", numero on ".$postfix."\n");
 
 ?>
