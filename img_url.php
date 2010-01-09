@@ -1,4 +1,5 @@
-<?php
+<?php // -*- coding: utf-8 -*-
+
 /**
  * Preparing the fields
  */
@@ -30,7 +31,7 @@ function img_url($number_r) {
 
 	$xslt = new XSLTProcessor();
 	$xsl = new DOMDocument();
-	$xsl->load( 'xsl/get_number_url.xsl', LIBXML_NOCDATA);
+	$xsl->load( 'xsl/get_number_url.xsl', LIBXML_NOCDATA || LIBXML_NONET );
 	$xslt->importStylesheet( $xsl );
 
 	$raw_url = $xslt->transformToXML( $orig_doc );

@@ -1,11 +1,15 @@
-<pre>
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+<?php // -*- coding: utf-8 -*-
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 
 require('db.inc');
+require('inithelpers.php');
 require('split_number.php');
 require('img_url.php');
+require('img_fetch.php');
+require('errorpage.php');
+
+init_xslt();
 
 /**
  * Connect the db.
@@ -36,22 +40,30 @@ if (isset($fields['error'])) {
 	exit(0);
 }
 
-$imgdata = fetch_img($fields['url']);
+errorpage("vituiksmän");
+exit(0);
+
+try {
+	//$img_info = img_fetch($fields['url']);
+	$local_img = img_fetch('http://users.jyu.fi/~jopesale/pienijoel.jpeg');
+} catch (Exception $e) {
+	print('Virhe: '.$e->getMessage()."\n");
+	exit(0);
+}
 
 /**
  * Write data to a database for debugging purposes
  */
 
-//ip,prefix,number,url_id,url_string,file
-$sth = $dbh->prepare('INSERT request (ip,prefix,number,url_id,url_string) '.
-		     'values (:ip, :prefix, :number, :url_id, :url_string)');
+$sth = $dbh->prepare('INSERT request (ip,prefix,number,url_id,url_string, file) '.
+		     'values (:ip, :prefix, :number, :url_id, :url_string, :file)');
 
 $sth->bindParam(':ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
 $sth->bindParam(':prefix', $number_r['PREFIX'], PDO::PARAM_STR);
 $sth->bindParam(':number', $number_r['NUMBER'], PDO::PARAM_STR);
 $sth->bindParam(':url_id', $fields['id'], PDO::PARAM_STR);
 $sth->bindParam(':url_string', $fields['string'], PDO::PARAM_STR);
-//$sth->bindParam(':file', , PDO::PARAM_STR);
+$sth->bindParam(':file', $local_img, PDO::PARAM_STR);
 
 $sth->execute();
 
@@ -62,4 +74,3 @@ $sth->execute();
 print($fields['url']."\n");
 
 ?>
-</pre>

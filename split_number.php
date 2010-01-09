@@ -1,4 +1,5 @@
-<?php
+<?php // -*- coding: utf-8 -*-
+
 require("tmp_prefixes.php");
 
 function split_number($number) {
