@@ -43,7 +43,9 @@ function img_url($number_r) {
 	
 	// Check if it matches
 	if (!$is_ok) {
-		return array('error' => 'Numpac on muuttanut sivujaan ja tämä ei toimi ainakaan toistaiseksi.');
+		return array('url' => $raw_url,
+			     'error' => 'Numpac on muuttanut sivujaan ja '.
+			     ' tämä ei toimi ainakaan toistaiseksi.');
 	}
 
 	return array(

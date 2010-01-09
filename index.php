@@ -11,11 +11,15 @@ require('errorpage.php');
 
 init_xslt();
 
+// setting some basic info for error handling
+$basic_info = array('ip' => $_SERVER['REMOTE_ADDR']);
+
 /**
  * Connect the db.
  */
 
-$dbh = new PDO('mysql:host=zouppen.iki.fi;dbname=siirretyt', 'siirretyt', $mysql_password);
+$dbh = new PDO('mysql:host=zouppen.iki.fi;dbname=siirretyt', 'siirretyt',
+	       $mysql_password);
 
 /**
  * Start processing
@@ -26,6 +30,7 @@ if (empty($_GET['n'])) {
   exit(0);
 }
 
+$basic_info['number'] = $_GET['n']; // for error handling
 $number_r = split_number($_GET['n']);
 
 if (isset($number_r['error'])) {
@@ -40,8 +45,7 @@ if (isset($fields['error'])) {
 	exit(0);
 }
 
-errorpage("vituiksmän");
-exit(0);
+$basic_info['img_url']=$fields['url'];
 
 try {
 	//$img_info = img_fetch($fields['url']);
@@ -71,6 +75,15 @@ $sth->execute();
  * Entertain the user
  */
 
-print($fields['url']."\n");
+$my_ns = 'http://iki.fi/zouppen/2010/php';
+$res_doc = new DOMDocument();
+$root = $res_doc->createElementNS($my_ns,'result');
+$res_doc->appendChild($root);
+
+$root->appendChild($res_doc->createElementNS($my_ns,'img',$local_img));
+$root->appendChild($res_doc->createElementNS($my_ns,'prefix',$number_r['PREFIX']));
+$root->appendChild($res_doc->createElementNS($my_ns,'number',$number_r['NUMBER']));
+
+okpage($res_doc);
 
 ?>
