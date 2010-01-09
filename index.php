@@ -3,44 +3,63 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-require("tmp_prefixes.php");
-print("jep".$max_length);
+require('db.inc');
+require('split_number.php');
+require('img_url.php');
 
-//print_r($GLOBALS);
+/**
+ * Connect the db.
+ */
+
+$dbh = new PDO('mysql:host=zouppen.iki.fi;dbname=siirretyt', 'siirretyt', $mysql_password);
+
+/**
+ * Start processing
+ */
 
 if (empty($_GET['n'])) {
   print("numero puuttuu. TODO parempi sivu.");
   exit(0);
 }
 
-$number = $_GET['n'];
+$number_r = split_number($_GET['n']);
 
-print("numero annettu\n");
-
-$match = false;
-
-foreach($prefixes as $prefix) {
-  if (!strncmp($number, $prefix, strlen($prefix))) {
-    // Is matching this prefix
-    $match=true;
-    break;
-  }
+if (isset($number_r['error'])) {
+	print('Virhe: '.$number_r['error']."\n");
+	exit(0);
 }
 
-if ($match==false) {
-  print("ei osunut numero ".$number."\n");
-  exit(0);
- }
+$fields = img_url($number_r);
 
-$postfix=substr($number,strlen($prefix));
+if (isset($fields['error'])) {
+	print('Virhe: '.$fields['error']."\n");
+	exit(0);
+}
 
-if (strlen($postfix) > $max_length) {
-  // siirretytnumerot.fi's maximum length reached
-  print("liian pitkä numero\n");
-  exit(0);
- }
+$imgdata = fetch_img($fields['url']);
 
-print("Osui ja upposi: operaattori on ".$prefix.", numero on ".$postfix."\n");
+/**
+ * Write data to a database for debugging purposes
+ */
+
+//ip,prefix,number,url_id,url_string,file
+$sth = $dbh->prepare('INSERT request (ip,prefix,number,url_id,url_string) '.
+		     'values (:ip, :prefix, :number, :url_id, :url_string)');
+
+$sth->bindParam(':ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+$sth->bindParam(':prefix', $number_r['PREFIX'], PDO::PARAM_STR);
+$sth->bindParam(':number', $number_r['NUMBER'], PDO::PARAM_STR);
+$sth->bindParam(':url_id', $fields['id'], PDO::PARAM_STR);
+$sth->bindParam(':url_string', $fields['string'], PDO::PARAM_STR);
+//$sth->bindParam(':file', , PDO::PARAM_STR);
+
+$sth->execute();
+
+/**
+ * Entertain the user
+ */
+
+print($fields['url']."\n");
 
 ?>
 </pre>
