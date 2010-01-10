@@ -1,0 +1,3 @@
+<FilesMatch "^img_">
+	ForceType image/gif
+</FilesMatch>

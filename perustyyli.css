@@ -3,7 +3,8 @@ body {
 	padding: 0 100px 2em 0;
 	background-color: #ffdcb8;
 	background-repeat: no-repeat;
-	background-position: top left;
+	background-position: 10px 5px;
+	background-image: url(numero.png);
 }
 
 #otsa {
@@ -15,7 +16,7 @@ body {
 h1 {
 	margin:0;
 	padding-left: 200px;
-	padding-top: 50px;
+	padding-top: 55px;
 
 }
 

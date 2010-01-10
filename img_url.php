@@ -13,8 +13,7 @@ function img_url($number_r) {
 	
 	// Getting the WWW page
 
-	//$curl_h = curl_init("http://www.siirretytnumerot.fi/QueryServlet");
-	$curl_h = curl_init("http://users.jyu.fi/~jopesale/web/siirretyt/vakio.html");
+	$curl_h = curl_init("http://www.siirretytnumerot.fi/QueryServlet");
 
 	curl_setopt($curl_h, CURLOPT_RETURNTRANSFER, 1); // As string
 	curl_setopt($curl_h, CURLOPT_HEADER, 0); // With no header

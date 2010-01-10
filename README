@@ -1,0 +1,62 @@
+============================
+Siirrettyjen numeroiden haku
+============================
+
+Author: Joel Lehtonen, joel.lehtonen ät iki.fi.
+
+Description
+===========
+
+This is a proxy search for www.siirretytnumerot.fi service with a
+better user interface.
+
+Licensing
+=========
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+It is important to notice if you put this logger running on a server
+you need to provide your users the source code of this product. If you
+haven't made any modifications, you can link to the original git
+repository at http://iki.fi/zouppen/repo/openttd-mysql.git . If you
+are running a modified copy, you need offer your source code. This can
+be done for example by putting a link to the source in your OpenTTD
+statistics page.
+
+More information about GNU Affero General Public License can be found
+at http://www.gnu.org/licenses/agpl.html .
+
+Installation
+============
+
+To use this software you need a MySQL database and PHP on your server.
+
+Configure MySQL
+---------------
+
+Create a new user with at least INSERT privilege. Create new tables
+from misc/initial.sql .
+
+Generate files
+--------------
+
+$ ./generate_pages.sh
+$ ./generate_prefixes.sh
+
+Set database configuration
+--------------------------
+
+$ cp db.inc.example db.inc
+$ emacs db.inc   # or nano, vim, ...
+
+Check that numpac_data directory exists and is writable by Apache.
+
+Navigate with your browser to the root of this directory. Should work.
+
+Other
+=====
+
+Feedback is welcome to joel.lehtonen ät iki.fi.

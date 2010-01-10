@@ -1,1 +1,6 @@
-$mysql_password = "mypass";
+<?php
+$mysql_host = 'localhost';
+$mysql_user = 'siirretyt';
+$mysql_password = 'mypass';
+$mysql_dbname = 'siirretyt';
+?>

@@ -1,6 +1,6 @@
 <?php // -*- coding: utf-8 -*-
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 
 require('db.inc');
 require('inithelpers.php');
@@ -18,8 +18,8 @@ $basic_info = array('ip' => $_SERVER['REMOTE_ADDR']);
  * Connect the db.
  */
 
-$dbh = new PDO('mysql:host=zouppen.iki.fi;dbname=siirretyt', 'siirretyt',
-	       $mysql_password);
+$dbh = new PDO('mysql:host='.$mysql_host.';dbname='.$mysql_dbname,
+	       $mysql_user, $mysql_password);
 
 /**
  * Start processing
@@ -38,10 +38,8 @@ try {
 	$basic_info['img_url'] = img_url($number_r);
 	$fields = img_url_parse($basic_info['img_url']);
 	
-	//$img_info = img_fetch('http://siirretytnumerot.fi/'.
-	//		      $basic_info['img_url']);
-	$local_img = img_fetch('http://users.jyu.fi/~jopesale/web/siirretyt/'.
-			       'numpac_data/esim.gif');
+	$local_img = img_fetch('http://www.siirretytnumerot.fi/'.
+			      $basic_info['img_url']);
 } catch (Exception $e) {
 	errorpage($e->getMessage());
 }

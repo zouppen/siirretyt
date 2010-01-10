@@ -15,7 +15,7 @@
   <xsl:variable name="otsikko">
     <xsl:choose>
       <xsl:when test="(/php:error|/php:result)">Hae uudestaan</xsl:when>
-      <xsl:otherwise>Hae</xsl:otherwise>
+      <xsl:otherwise>Hae operaattoria</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 
@@ -26,7 +26,7 @@
       <link rel="stylesheet" href="perustyyli.css" type="text/css" />
     </head>
     <body>
-      <div id="otsa" style="background-image: url(numero.png);">
+      <div id="otsa">
 	<h1>Siirrettyjen numeroiden haku</h1>
       </div>
 
@@ -34,21 +34,26 @@
 	<xsl:apply-templates />
 
 	<h2><xsl:value-of select="$otsikko"/></h2>
-	  <form method="get" action=".">
+	<form method="get" action="search">
 	
-	<p>
-	    <label for="telephone">Puhelinnumero:</label>
+	  <p>
+	    <label for="telephone">Puhelinnumero: </label>
 	    <input id="telephone" name="telephone" size="15" type="text"
 		   value="{(/php:error|/php:result)/@number_raw}"/>
 	    <input type="submit" value="Tarkista"
 		   title="Tarkista operaattori."/>
+	    
+	  </p>
+	</form>
 
-	</p>
-	  </form>	
+	<p>Voit antaa numeron joko suomalaisessa muodossa (ilman
+	välilyöntejä ja väliviivoja) tai kansainvälisessä muodossa
+	(etuliite +358 tai 00358).</p>
+
 	<h2>Tietoja palvelusta</h2>
 	
 	<p>Tiedot noudetaan Numpacin ylläpitämästä siirrettyjen
-	numeroiden tietokannoista. <a href="miksi.html">Lisätietoja</a>
+	numeroiden tietokannoista. <a href="miksi">Lisätietoja</a>
 	käyttöehdoista ja siitä, miksi tämä sivu on ylipäätään
 	olemassa.</p>
 
