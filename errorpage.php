@@ -12,15 +12,18 @@ function okpage($doc) {
 }
 
 function errorpage($msg) {
+	global $basic_info;
+	
 	$error_doc = new DOMDocument();
 	$root = $error_doc->createElementNS('http://iki.fi/zouppen/2010/php',
 					    'error',$msg);
 	$error_doc->appendChild($root);
+	if (isset($basic_info['number'])) {
+		$root->setAttribute('number_raw',$basic_info['number']);
+	}
 
 	// Beautiful output with XSLT
-
 	global $xslt_out;
-	global $basic_info;
 
 	$xslt_out->transformToURI( $error_doc, 'php://output' );
 

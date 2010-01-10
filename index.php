@@ -25,13 +25,16 @@ $dbh = new PDO('mysql:host=zouppen.iki.fi;dbname=siirretyt', 'siirretyt',
  * Start processing
  */
 
-if (empty($_GET['n'])) {
+if (empty($_GET['telephone'])) {
 	errorpage("Haettava numero puuttuu.");
 }
-$basic_info['number'] = $_GET['n']; // for error handling
+
+// Taking out the international prefix, if any
+$in_number=$_GET['telephone'];
+$basic_info['number'] = preg_replace('/^(\+358|00358)/', '0', $in_number);
 
 try {
-	$number_r = split_number($_GET['n']);	
+	$number_r = split_number($basic_info['number']);
 	$basic_info['img_url'] = img_url($number_r);
 	$fields = img_url_parse($basic_info['img_url']);
 	
@@ -68,9 +71,10 @@ $res_doc = new DOMDocument();
 $root = $res_doc->createElementNS($my_ns,'result');
 $res_doc->appendChild($root);
 
-$root->appendChild($res_doc->createElementNS($my_ns,'img',$local_img));
-$root->appendChild($res_doc->createElementNS($my_ns,'prefix',$number_r['PREFIX']));
-$root->appendChild($res_doc->createElementNS($my_ns,'number',$number_r['NUMBER']));
+$root->setAttribute('img',$local_img);
+$root->setAttribute('prefix',$number_r['PREFIX']);
+$root->setAttribute('number',$number_r['NUMBER']);
+$root->setAttribute('number_raw',$basic_info['number']);
 
 okpage($res_doc);
 

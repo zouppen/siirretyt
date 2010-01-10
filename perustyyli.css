@@ -1,0 +1,37 @@
+body {
+	margin: 0;
+	padding: 0 100px 2em 0;
+	background-color: #ffdcb8;
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+#otsa {
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	height: 150px;
+}
+
+h1 {
+	margin:0;
+	padding-left: 200px;
+	padding-top: 50px;
+
+}
+
+#runko {
+	margin: 0 auto 0 100px;
+	max-width: 50em;
+	background-color: white;
+	padding: 2em;
+	border: thin solid black;
+}
+
+h2:first-child {
+	margin-top: 0;
+
+/* additions */
+
+.error {
+    color: red;
+}
