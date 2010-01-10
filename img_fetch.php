@@ -17,6 +17,7 @@ function img_fetch($url) {
 	$curl_h = curl_init($url);
 
 	curl_setopt($curl_h, CURLOPT_HEADER, 0); // With no header
+	curl_setopt($curl_h, CURLOPT_FAILONERROR, 1);
 	curl_setopt($curl_h, CURLOPT_FILE, $tmpfile_h);
 
 	$is_ok = curl_exec($curl_h);

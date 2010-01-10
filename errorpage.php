@@ -27,12 +27,15 @@ function errorpage($msg) {
 	// Put error message to the database, too
 	global $dbh;
 	
-	$sth = $dbh->prepare('INSERT error (ip,raw_number,raw_url) '.
-		     'values (:ip, :raw_number, :raw_url)');
+	$sth = $dbh->prepare('INSERT error (ip,raw_number,msg,raw_url) '.
+		     'values (:ip,:raw_number,:msg,:raw_url)');
 
 	$sth->bindParam(':ip', $basic_info['ip'], PDO::PARAM_STR);
 	$sth->bindParam(':raw_number', $basic_info['number'], PDO::PARAM_STR);
+	$sth->bindParam(':msg', $msg, PDO::PARAM_STR);
 	$sth->bindParam(':raw_url', $basic_info['img_url'], PDO::PARAM_STR);
 	
 	$sth->execute();
+
+	exit(0); // Stop page.
 }

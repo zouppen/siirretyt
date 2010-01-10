@@ -19,11 +19,17 @@ function img_url($number_r) {
 	curl_setopt($curl_h, CURLOPT_RETURNTRANSFER, 1); // As string
 	curl_setopt($curl_h, CURLOPT_HEADER, 0); // With no header
 	curl_setopt($curl_h, CURLOPT_POST, 1);
+	curl_setopt($curl_h, CURLOPT_FAILONERROR, 1);
 	curl_setopt($curl_h, CURLOPT_POSTFIELDS, $number_query);
 
 	$orig_xml = curl_exec($curl_h);
 	curl_close($curl_h);
 	
+	if ($orig_xml == FALSE) {
+		throw new Exception("Tiedon hakeminen Numpacin sivuilta ei ".
+				    "onnistunut.");
+	}
+
 	$orig_doc = new DOMDocument();
 	$orig_doc->loadHTML($orig_xml);
 	
@@ -36,6 +42,14 @@ function img_url($number_r) {
 
 	$raw_url = $xslt->transformToXML( $orig_doc );
 
+	return $raw_url;
+}
+
+/**
+ * Parse given url (split id and string)
+ */
+function img_url_parse($raw_url) {
+
 	// Split the fields of URL
 
 	$pattern = '/^QueryServlet\?ID=(.*)&STRING=(.*)$/';
@@ -43,14 +57,12 @@ function img_url($number_r) {
 	
 	// Check if it matches
 	if (!$is_ok) {
-		return array('url' => $raw_url,
-			     'error' => 'Numpac on muuttanut sivujaan ja '.
-			     ' tämä ei toimi ainakaan toistaiseksi.');
+		throw new Exception('Numpacin antaman osoitteen lukeminen '.
+				    'ei onnistunut.');
 	}
 
 	return array(
-		'url' => $raw_url,
-		'id' => $matches[1],
-		'string' => $matches[2]);	
+		'id' => urldecode($matches[1]),
+		'string' => urldecode($matches[2]));
 }
 ?>

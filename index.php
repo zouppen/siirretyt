@@ -1,6 +1,6 @@
 <?php // -*- coding: utf-8 -*-
-//error_reporting(E_ALL);
-//ini_set('display_errors', '1');
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 require('db.inc');
 require('inithelpers.php');
@@ -26,33 +26,21 @@ $dbh = new PDO('mysql:host=zouppen.iki.fi;dbname=siirretyt', 'siirretyt',
  */
 
 if (empty($_GET['n'])) {
-  print("numero puuttuu. TODO parempi sivu.");
-  exit(0);
+	errorpage("Haettava numero puuttuu.");
 }
-
 $basic_info['number'] = $_GET['n']; // for error handling
-$number_r = split_number($_GET['n']);
-
-if (isset($number_r['error'])) {
-	print('Virhe: '.$number_r['error']."\n");
-	exit(0);
-}
-
-$fields = img_url($number_r);
-
-if (isset($fields['error'])) {
-	print('Virhe: '.$fields['error']."\n");
-	exit(0);
-}
-
-$basic_info['img_url']=$fields['url'];
 
 try {
-	//$img_info = img_fetch($fields['url']);
-	$local_img = img_fetch('http://users.jyu.fi/~jopesale/pienijoel.jpeg');
+	$number_r = split_number($_GET['n']);	
+	$basic_info['img_url'] = img_url($number_r);
+	$fields = img_url_parse($basic_info['img_url']);
+	
+	//$img_info = img_fetch('http://siirretytnumerot.fi/'.
+	//		      $basic_info['img_url']);
+	$local_img = img_fetch('http://users.jyu.fi/~jopesale/web/siirretyt/'.
+			       'numpac_data/esim.gif');
 } catch (Exception $e) {
-	print('Virhe: '.$e->getMessage()."\n");
-	exit(0);
+	errorpage($e->getMessage());
 }
 
 /**

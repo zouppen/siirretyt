@@ -15,15 +15,14 @@ function split_number($number) {
 	}
 	
 	if ($match==false) {
-		$result['error'] = "Numeron operaattoritunnusta ei tunneta.";
-		return $result;
+		throw new Exception("Numeron operaattoritunnusta ei tunneta.");
 	}
 	
 	$number_end=substr($number,strlen($prefix));
 	
 	if (strlen($number_end) > $GLOBALS['max_length']) {
 		// siirretytnumerot.fi's maximum length reached
-		$result['error'] = "Numero on liian pitkä.";
+		throw new Exception("Numero on liian pitkä.");
 		return $result;
 	}
 
