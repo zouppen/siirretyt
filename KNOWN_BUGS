@@ -1,0 +1,10 @@
+==========
+Known bugs
+==========
+
+#1: 
+
+If you search a non-existent number it return the answer in text
+format. This version is unable to parse it.
+
+Steps to reproduce: Search for 0407890700, for example.
