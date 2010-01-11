@@ -37,8 +37,14 @@ To use this software you need a MySQL database and PHP on your server.
 Configure MySQL
 ---------------
 
-Create a new user with at least INSERT privilege. Create new tables
-from misc/initial.sql .
+Create a new user with at least INSERT privilege to request and error
+tables and select privilege to the operator table.
+
+> grant select on siirretyt.operator to 'user'@'host';
+> grant insert on siirretyt.request to 'user'@'host';
+> grant insert on siirretyt.error to 'user'@'host';
+
+Create new tables from misc/initial.sql .
 
 Generate files
 --------------

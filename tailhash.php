@@ -1,8 +1,9 @@
 <?php // -*- coding: utf-8 -*-
-/**
- * Preparing the fields
- */
 
+/**
+ * Calculate "tail hash from the image.
+ * That is taking the rightmost part of the image and taking hash from it.
+ */
 function tailhash($local_img) {
 	// some constants
 	$box_w = 30;

@@ -1,3 +1,5 @@
 <FilesMatch "^db.inc$">
 	Deny from all
 </FilesMatch>
+
+DirectoryIndex tmp_index.html

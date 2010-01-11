@@ -9,6 +9,13 @@ require('img_url.php');
 require('img_fetch.php');
 require('errorpage.php');
 require('tailhash.php');
+require('operator.php');
+
+// Enable cache to avoid repetitive requests
+$expires = 600; // ten minutes
+header("Pragma: public");
+header("Cache-Control: maxage=".$expires);
+header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expires) . ' GMT');
 
 init_xslt();
 
@@ -46,6 +53,7 @@ try {
 	$local_img = img_fetch('http://www.siirretytnumerot.fi/'.
 			      $basic_info['img_url']);
 	$hash = tailhash($local_img);
+	$operator_r = operator($hash);
 } catch (Exception $e) {
 	errorpage($e->getMessage());
 }
@@ -72,6 +80,8 @@ $sth->execute();
  * Entertain the user
  */
 
+print_r($operator_r);
+
 $my_ns = 'http://iki.fi/zouppen/2010/php';
 $res_doc = new DOMDocument();
 $root = $res_doc->createElementNS($my_ns,'result');
@@ -81,6 +91,9 @@ $root->setAttribute('img',$local_img);
 $root->setAttribute('prefix',$number_r['PREFIX']);
 $root->setAttribute('number',$number_r['NUMBER']);
 $root->setAttribute('number_raw',$basic_info['number']);
+$root->setAttribute('op_name',$operator_r['name']);
+$root->setAttribute('op_id',$operator_r['op_id']);
+$root->setAttribute('op_homepage',$operator_r['homepage']);
 
 okpage($res_doc);
 

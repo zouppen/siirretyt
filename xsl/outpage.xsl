@@ -54,9 +54,12 @@
 	<h2>Tietoja palvelusta</h2>
 	
 	<p>Tiedot noudetaan Numpacin ylläpitämästä siirrettyjen
-	numeroiden tietokannasta. <a href="miksi">Lisätietoja</a>
-	käyttöehdoista ja siitä, miksi tämä sivu on ylipäätään
-	olemassa.</p>
+	numeroiden tietokannasta. <a href="miksi" title="Lisätietoja
+	käyttöehdoista ja taustoista">Lisätietoja</a> käyttöehdoista
+	ja siitä, miksi tämä sivu on ylipäätään olemassa. Myös
+	<a href="rekisteriseloste" title="Rekisteriseloste">
+	  rekisteriseloste</a> on
+	saatavilla.</p>
 
 	<p>
 	  Palvelun on kirjoittanut PHP:llä ja XSLT:llä <a href="../.."
@@ -81,13 +84,23 @@
     .</p>
   </xsl:template>
 
-  <xsl:template match="/php:result">
+  <xsl:template match="/php:result[not(@op_name='')]" priority="2">
+    <h2>Onnistui!</h2>
+
+    <p>Numeron <strong>
+	<xsl:value-of select="@prefix" /> <xsl:value-of select="@number" />
+      </strong> operaattori on
+      <a href="{@op_homepage}" title="Operaattorin kotisivulle">
+	<xsl:value-of select="@op_name" />
+      </a>
+      (teleyritystunniste on <xsl:value-of select="@op_id" />).
+    </p>
+  </xsl:template>
+
+  <xsl:template match="/php:result" priority="1">
     <h2>Onnistui!</h2>
     
     <img src="{@img}" alt="Operaattorin nimi"/>
-    <p>Numeron operaattoritunnus on <xsl:value-of select="@prefix"/>.</p>
   </xsl:template>
-
-
 
 </xsl:stylesheet>
