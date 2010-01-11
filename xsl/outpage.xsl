@@ -46,14 +46,15 @@
 	  </p>
 	</form>
 
-	<p>Voit antaa numeron joko suomalaisessa muodossa (ilman
-	välilyöntejä ja väliviivoja) tai kansainvälisessä muodossa
-	(etuliite +358 tai 00358).</p>
+	<p>Voit antaa numeron joko suomalaisessa muodossa tai
+	kansainvälisessä muodossa (etuliite +358 tai 00358). Numeroon
+	mahdollisesti kuuluvat välimerkit voi jättää pois.
+	</p>
 
 	<h2>Tietoja palvelusta</h2>
 	
 	<p>Tiedot noudetaan Numpacin ylläpitämästä siirrettyjen
-	numeroiden tietokannoista. <a href="miksi">Lisätietoja</a>
+	numeroiden tietokannasta. <a href="miksi">Lisätietoja</a>
 	käyttöehdoista ja siitä, miksi tämä sivu on ylipäätään
 	olemassa.</p>
 

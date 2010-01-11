@@ -8,6 +8,7 @@ require('split_number.php');
 require('img_url.php');
 require('img_fetch.php');
 require('errorpage.php');
+require('tailhash.php');
 
 init_xslt();
 
@@ -31,8 +32,12 @@ if (empty($_GET['telephone'])) {
 
 // Taking out the international prefix, if any
 $in_number=$_GET['telephone'];
-$basic_info['number'] = preg_replace('/^(\+358|00358)/', '0', $in_number);
+$in_number_fi = preg_replace('/^(\+358|00358)/', '0', $in_number);
 
+// Take dashes and spaces out
+$basic_info['number'] = preg_replace('/[- ]/', '', $in_number_fi);
+
+// Do the magic to find out the operator
 try {
 	$number_r = split_number($basic_info['number']);
 	$basic_info['img_url'] = img_url($number_r);
@@ -40,6 +45,7 @@ try {
 	
 	$local_img = img_fetch('http://www.siirretytnumerot.fi/'.
 			      $basic_info['img_url']);
+	$hash = tailhash($local_img);
 } catch (Exception $e) {
 	errorpage($e->getMessage());
 }
@@ -48,8 +54,9 @@ try {
  * Write data to a database for debugging purposes
  */
 
-$sth = $dbh->prepare('INSERT request (ip,prefix,number,url_id,url_string, file) '.
-		     'values (:ip, :prefix, :number, :url_id, :url_string, :file)');
+$sth = $dbh->prepare('INSERT request (ip,prefix,number,url_id,url_string,'.
+		     'file,hash) values'.
+		     '(:ip,:prefix,:number,:url_id,:url_string,:file,:hash)');
 
 $sth->bindParam(':ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
 $sth->bindParam(':prefix', $number_r['PREFIX'], PDO::PARAM_STR);
@@ -57,6 +64,7 @@ $sth->bindParam(':number', $number_r['NUMBER'], PDO::PARAM_STR);
 $sth->bindParam(':url_id', $fields['id'], PDO::PARAM_STR);
 $sth->bindParam(':url_string', $fields['string'], PDO::PARAM_STR);
 $sth->bindParam(':file', $local_img, PDO::PARAM_STR);
+$sth->bindParam(':hash', $hash, PDO::PARAM_STR);
 
 $sth->execute();
 
