@@ -4,7 +4,7 @@ body {
 	background-color: #ffdcb8;
 	background-repeat: no-repeat;
 	background-position: 10px 5px;
-	background-image: url(numero.png);
+	background-image: url(../numero.png);
 }
 
 #otsa {

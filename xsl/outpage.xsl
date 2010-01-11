@@ -23,7 +23,7 @@
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi">
     <head>
       <title>Siirrettyjen numeroiden haku</title>
-      <link rel="stylesheet" href="perustyyli.css" type="text/css" />
+      <link rel="stylesheet" href="css/basic.css" type="text/css" />
       <link rel="stylesheet" href="css/mobile.css" type="text/css"
 	    media="handheld" />
       <link rel="search" type="application/opensearchdescription+xml" title="Siirretyt numerot" href="opensearch"/>
@@ -63,6 +63,8 @@
 	    avaamalla hakukoneluettelo selaimesi oikeasta yläkulmasta.
 	  </p>
 	</xsl:if>
+
+	<p class="fluff">Tätä sivua voi myös vaivatta käyttää kännykällä.</p>
 
 	<h2>Tietoja palvelusta</h2>
 	
