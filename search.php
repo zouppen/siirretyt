@@ -80,8 +80,6 @@ $sth->execute();
  * Entertain the user
  */
 
-print_r($operator_r);
-
 $my_ns = 'http://iki.fi/zouppen/2010/php';
 $res_doc = new DOMDocument();
 $root = $res_doc->createElementNS($my_ns,'result');
