@@ -1,5 +1,8 @@
 <FilesMatch "^db.inc$">
 	Deny from all
 </FilesMatch>
+<FilesMatch "^opensearch.xml$">
+	ForceType application/opensearchdescription+xml
+</FilesMatch>
 
 DirectoryIndex tmp_index.html

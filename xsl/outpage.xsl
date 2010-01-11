@@ -24,6 +24,8 @@
     <head>
       <title>Siirrettyjen numeroiden haku</title>
       <link rel="stylesheet" href="perustyyli.css" type="text/css" />
+      <link rel="search" type="application/opensearchdescription+xml" title="Siirretyt numerot" href="opensearch"/>
+      <link rel="icon" type="image/vnd.microsoft.icon" href="opensearch.ico" />
     </head>
     <body>
       <div id="otsa">
@@ -42,7 +44,9 @@
 		   value="{(/php:error|/php:result)/@number_raw}"/>
 	    <input type="submit" value="Tarkista"
 		   title="Tarkista operaattori."/>
-	    
+	    <xsl:if test="(/php:error|/php:result)/@quick">
+	      <input type="hidden" name="quick" value="1" />
+	    </xsl:if>
 	  </p>
 	</form>
 
@@ -50,6 +54,13 @@
 	kansainvälisessä muodossa (etuliite +358 tai 00358). Numeroon
 	mahdollisesti kuuluvat välimerkit voi jättää pois.
 	</p>
+
+	<xsl:if test="not((/php:error|/php:result)/@quick)">
+	  <p>Kannattaa lisätä tämä hakutoiminto
+	    <strong>pikahakukoneiden</strong> listaan
+	    avaamalla hakukoneluettelo selaimesi oikeasta yläkulmasta.
+	  </p>
+	</xsl:if>
 
 	<h2>Tietoja palvelusta</h2>
 	
@@ -78,10 +89,12 @@
     
     <p><xsl:value-of select="."/></p>
 
-    <p>Mikäli ongelmat jatkuvat, saattaa syynä olla, että Numpac on
-    muuttanut sivujensa rakennetta. Voit yrittää hakea numeroa suoraan
-    alkuperäisiltä sivulta osoitteesta http://siirretytnumerot.fi/
-    .</p>
+    <xsl:if test="@numpac_error">
+      <p>Mikäli ongelmat jatkuvat, saattaa syynä olla, että Numpac on
+	muuttanut sivujensa rakennetta. Voit yrittää hakea numeroa suoraan
+	alkuperäisiltä sivulta osoitteesta http://siirretytnumerot.fi/ .
+      </p>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="/php:result[not(@op_name='')]" priority="2">

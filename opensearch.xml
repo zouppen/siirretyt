@@ -1,0 +1,19 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+<ShortName>Siirretyt numerot</ShortName>
+<Description>Selvittää siirrettyjen numeroiden operaattorin nimen.</Description>
+<InputEncoding>UTF-8</InputEncoding>
+<Image width="16" height="16" type="image/x-icon">http://users.jyu.fi/~jopesale/web/siirretyt/opensearch.ico</Image>
+<Url type="text/html" method="get"
+     template="http://users.jyu.fi/~jopesale/web/siirretyt/search">
+  <Param name="telephone" value="{searchTerms}"/>
+  <Param name="quick" value="1"/>
+</Url>
+
+<Url type="application/opensearchdescription+xml"
+     rel="self"
+     template="http://users.jyu.fi/~jopesale/web/siirretyt/opensearch" />
+
+
+
+</OpenSearchDescription>

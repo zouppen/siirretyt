@@ -44,14 +44,36 @@ $in_number_fi = preg_replace('/^(\+358|00358)/', '0', $in_number);
 // Take dashes and spaces out
 $basic_info['number'] = preg_replace('/[- ]/', '', $in_number_fi);
 
-// Do the magic to find out the operator
+// Check if number is somewhat senseful
+if(!preg_match('/^[0-9]+$/', $basic_info['number'])) {
+	if (isset($_GET['quick'])) {
+		errorpage('Et tainnut hakea numeroa. Valitsitko väärän '.
+			  'hakukoneen? Koeta hakea vaikka Googlella.');
+	} else {
+		errorpage('Et tainnut hakea numeroa.');
+	}
+}
+
+// Find out the operator prefix
 try {
 	$number_r = split_number($basic_info['number']);
+} catch (Exception $e) {
+	errorpage($e->getMessage());
+}
+
+// Fetch data from Numpac
+try {
 	$basic_info['img_url'] = img_url($number_r);
 	$fields = img_url_parse($basic_info['img_url']);
 	
 	$local_img = img_fetch('http://www.siirretytnumerot.fi/'.
 			      $basic_info['img_url']);
+} catch (Exception $e) {
+	errorpage($e->getMessage(),true);
+}
+
+// Do the magic to find out the operator
+try {
 	$hash = tailhash($local_img);
 	$operator_r = operator($hash);
 } catch (Exception $e) {
@@ -92,6 +114,10 @@ $root->setAttribute('number_raw',$basic_info['number']);
 $root->setAttribute('op_name',$operator_r['name']);
 $root->setAttribute('op_id',$operator_r['op_id']);
 $root->setAttribute('op_homepage',$operator_r['homepage']);
+
+if (isset($_GET['quick'])) {
+	$root->setAttribute('quick',$_GET['quick']);
+}
 
 okpage($res_doc);
 

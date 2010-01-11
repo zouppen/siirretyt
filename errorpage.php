@@ -11,7 +11,7 @@ function okpage($doc) {
 	$xslt_out->transformToURI( $doc, 'php://output' );
 }
 
-function errorpage($msg) {
+function errorpage($msg,$numpac_error = false) {
 	global $basic_info;
 	
 	$error_doc = new DOMDocument();
@@ -20,6 +20,14 @@ function errorpage($msg) {
 	$error_doc->appendChild($root);
 	if (isset($basic_info['number'])) {
 		$root->setAttribute('number_raw',$basic_info['number']);
+	}
+
+	if (isset($_GET['quick'])) {
+		$root->setAttribute('quick',$_GET['quick']);
+	}
+
+	if ($numpac_error) {
+		$root->setAttribute('numpac_error',1);
 	}
 
 	// Beautiful output with XSLT

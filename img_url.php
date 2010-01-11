@@ -5,7 +5,7 @@
  */
 
 function img_url($number_r) {
-
+	
 	$number_r['Submit'] = 'Hae';
 	$number_r['LANGUAGE'] = 'Finnish';
 
