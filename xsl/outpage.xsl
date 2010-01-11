@@ -24,6 +24,8 @@
     <head>
       <title>Siirrettyjen numeroiden haku</title>
       <link rel="stylesheet" href="perustyyli.css" type="text/css" />
+      <link rel="stylesheet" href="css/mobile.css" type="text/css"
+	    media="handheld" />
       <link rel="search" type="application/opensearchdescription+xml" title="Siirretyt numerot" href="opensearch"/>
       <link rel="icon" type="image/vnd.microsoft.icon" href="opensearch.ico" />
     </head>
@@ -56,7 +58,7 @@
 	</p>
 
 	<xsl:if test="not((/php:error|/php:result)/@quick)">
-	  <p>Kannattaa lisätä tämä hakutoiminto
+	  <p class="fluff">Kannattaa lisätä tämä hakutoiminto
 	    <strong>pikahakukoneiden</strong> listaan
 	    avaamalla hakukoneluettelo selaimesi oikeasta yläkulmasta.
 	  </p>

@@ -8,9 +8,8 @@ body {
 }
 
 #otsa {
-	background-repeat: no-repeat;
-	background-position: bottom left;
-	height: 150px;
+    height: auto; /* nokia browser bug */
+    height: 150px;
 }
 
 h1 {
@@ -30,6 +29,7 @@ h1 {
 
 h2:first-child {
 	margin-top: 0;
+}
 
 /* additions */
 
