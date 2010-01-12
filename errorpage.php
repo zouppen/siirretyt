@@ -1,14 +1,22 @@
 <?php // -*- coding: utf-8 -*-
+
 /**
- * Preparing the fields
+ * Good and bad messages
  */
-
-function okpage($doc) {
+function outpage($doc) {
 	// Beautiful output with XSLT
-
-	global $xslt_out;
-
-	$xslt_out->transformToURI( $doc, 'php://output' );
+	
+	global $basic_info;
+	
+	if ($basic_info['xml']) {
+		// Raw XML output
+		header('Content-type: application/xml');
+		$doc->save('php://output');
+	} else {
+		// Beautiful XHTML output
+		global $xslt_out;
+		$xslt_out->transformToURI( $doc, 'php://output' );
+	}
 }
 
 function errorpage($msg,$numpac_error = false) {
@@ -30,11 +38,8 @@ function errorpage($msg,$numpac_error = false) {
 		$root->setAttribute('numpac_error',1);
 	}
 
-	// Beautiful output with XSLT
-	global $xslt_out;
-
-	$xslt_out->transformToURI( $error_doc, 'php://output' );
-
+	outpage($error_doc);
+	  
 	// Put error message to the database, too
 	global $dbh;
 	

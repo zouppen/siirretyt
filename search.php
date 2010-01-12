@@ -22,6 +22,9 @@ init_xslt();
 // setting some basic info for error handling
 $basic_info = array('ip' => $_SERVER['REMOTE_ADDR']);
 
+if (isset($_GET['xml'])) $basic_info['xml'] = true;
+else $basic_info['xml'] = false;
+
 /**
  * Connect the db.
  */
@@ -67,7 +70,7 @@ try {
 	$fields = img_url_parse($basic_info['img_url']);
 	
 	$local_img = img_fetch('http://www.siirretytnumerot.fi/'.
-			      $basic_info['img_url']);
+			       $basic_info['img_url']);
 } catch (Exception $e) {
 	errorpage($e->getMessage(),true);
 }
@@ -119,6 +122,6 @@ if (isset($_GET['quick'])) {
 	$root->setAttribute('quick',$_GET['quick']);
 }
 
-okpage($res_doc);
+outpage($res_doc);
 
 ?>

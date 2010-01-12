@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi" lang="fi">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Siirrettyjen numeroiden haku | XML-rajapinta</title>
+    <link rel="stylesheet" href="css/basic.css" type="text/css" />
+    <link rel="stylesheet" href="css/mobile.css" type="text/css"
+	  media="handheld" />
+    <link rel="icon" type="image/vnd.microsoft.icon" href="opensearch.ico" />
+  </head>
+  <body>
+    <div id="otsa">
+      <h1>Siirrettyjen numeroiden haku</h1>
+    </div>
+    <div id="runko">
+      <h2>XML-rajapinta</h2>
+
+       <p>Kuten normaalissakin selainkäyttöisessä kyselyssä, voit antaa 
+	numeron joko suomalaisessa muodossa tai
+        kansainvälisessä muodossa (etuliite +358 tai 00358). Numeroon
+        mahdollisesti kuuluvat välimerkit voi jättää pois. Numerossa 
+	olevat välilyönnit ja väliviivat poistetaan joka tapauksessa 
+	ennen hakua.
+        </p>
+	
+	<p>Voit siis vaivatta esimerkiksi prosessoida kännykästä 
+	löytyvät puhelinnumerot ilman, että numeroista tarvitsee pilkkoa 
+	operaattoritunnuksia pois.</p>
+
+	<h2>Kyselyn muoto</h2>
+
+	<p>Kysely tapahtuu HTTP:llä seuraavasta osoitteesta:</p>
+
+	<pre>http://users.jyu.fi/~jopesale/web/siirretyt/search?telephone=PUHELINNUMERO&amp;xml=1</pre>
+	
+	<p>Vastaus on tyyppiä <tt>application/xml</tt> ja sen sisältö 
+	kyselyn onnistuessa on seuraavanlainen:</p>
+
+<pre>&lt;result xmlns="http://iki.fi/zouppen/2010/php"
+        img="numpac_data/IMG_URL"
+        prefix="PREFIX" number="NUMBER_ENDING"
+        number_raw="WHOLE_NUMBER"
+        op_name="OPERATOR_NAME" op_id="OPERATOR_ID" 
+        op_homepage="OPERATOR_HOMEPAGE"/&gt;</pre>
+	
+	<p>Mikäli kysytyn numeron operaattoria ei tunnisteta, ei 
+	vastauksessa ole attribuutteja <tt>op_name</tt>, <tt>op_id</tt> 
+	eikä <tt>op_homepage</tt>. Tällöin vastaus on ainoastaan 
+	kuvana attribuutin <tt>img</tt> osoittamassa osoitteessa.</p>
+
+	<p>Kyselyn epäonnistuessa vastaus on seuraavassa muodossa:</p>
+
+<pre>&lt;error xmlns="http://iki.fi/zouppen/2010/php"
+       number_raw="WHOLE_NUMBER"&gt;ERROR_MESSAGE&lt;/error&gt;</pre>
+
+      <h2>Käyttöohjeet ja -ehdot</h2>
+	
+	<p>Käytä palvelua Internet-palveluntarjoajasi proxyn 
+välityksellä, mikäli mahdollista. Vastaukset kyselyihin jäävät tällöin 
+välimuistiin ja näin tälle palvelimelle ja ennen kaikkea Numpacin 
+palvelimelle päätyvien kyselyiden määrä pysyy mahdollisimman 
+pienenä.</p>
+
+	<p>Ethän käytä tätä palvelua kaupalliseen käyttöön. Numpac 
+	tarjoaa kaupallisia toimijoita varten rajapinnan osoitteessa 
+	<tt>www.kyselypalvelu.fi</tt>. Yksityishenkilöille tuota 
+	palvelua ei edes myydä, jolloin tämä rajapinta on ainoa 
+	mahdollinen vaihtoehto.</p>
+
+	<p>Voisitko ilmoittaa minulle joko sähköpostilla osoitteeseen 
+joel.lehtonen ät iki.fi tai IRCNetiin nimimerkille Zouppen, mikäli 
+käytät tätä rajapintaa laajamittaisesti. Laajamittaista käyttöä on 
+esimerkiksi sadan numeron hakeminen automatisoidusti.</p>
+
+	<p>Olen myös kiinnostunut sovelluksista, mitä tämän palvelun 
+	avulla on pystytty tekemään. Kuulen niistä mielelläni.</p>
+
+      <p><a href="." title="Takaisin hakuun">Palaa etusivulle</a>.</p>
+  </div>
+  </body>
+</html>

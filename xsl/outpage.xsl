@@ -71,7 +71,10 @@
 	<p>Tiedot noudetaan Numpacin ylläpitämästä siirrettyjen
 	numeroiden tietokannasta. <a href="miksi" title="Lisätietoja
 	käyttöehdoista ja taustoista">Lisätietoja</a> käyttöehdoista
-	ja siitä, miksi tämä sivu on ylipäätään olemassa. Myös
+	ja siitä, miksi tämä sivu on ylipäätään olemassa. Tarjolla on 
+	myös ohjelmointihaluisille <a href="xml-rajapinta" 
+	title="Ohjeet XML-rajapinnan käyttöön">XML-rajapinta</a> 
+	hakuun. Myös
 	<a href="rekisteriseloste" title="Rekisteriseloste">
 	  rekisteriseloste</a> on
 	saatavilla.</p>

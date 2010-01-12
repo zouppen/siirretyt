@@ -36,3 +36,9 @@ h2:first-child {
 .error {
     color: red;
 }
+
+pre {
+	border: 1px solid black;
+	margin-left: 2em;
+	padding: 0.5em;
+}
