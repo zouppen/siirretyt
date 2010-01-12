@@ -33,3 +33,12 @@ p {
 #telephone {
     -wap-input-format: "*N";
 }
+
+pre {
+	background-color: #D1E2EF;
+	margin-left: 0;
+}
+
+li {
+	background-color: white;
+}
